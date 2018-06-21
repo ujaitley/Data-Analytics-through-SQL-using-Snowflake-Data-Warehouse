@@ -30,7 +30,7 @@ group by Production_House
 order by Profit desc
 limit 20;
  
- Number of movies release by each studio in year 2017:
+ #Number of movies release by each studio in year 2017:
  
 SELECT substring (PRODUCTION_COMPANIES, 12,20 ) as Production_House, COUNT(Production_House) as total_releases
 from MOVIE_TABLE.PUBLIC.MOVIES_METADATA
@@ -46,11 +46,11 @@ where  RELEASE_DATE >= '0017-01-01' AND RELEASE_DATE <= '0018-01-01'
 group by Genre
 order by total_genre_releases desc;
 
-#Most profitable Genre
+#Most profitable Genre in the year 2017
 
 SELECT substring (genres, 12,18 ) as Genre, SUM(revenue - budget) as Profit 
 from MOVIE_TABLE.PUBLIC.MOVIES_METADATA
 where  RELEASE_DATE >= '0017-01-01' AND RELEASE_DATE <= '0018-01-01'
 group by Genre
 order by Profit desc
-limit 20;
+limit 10;

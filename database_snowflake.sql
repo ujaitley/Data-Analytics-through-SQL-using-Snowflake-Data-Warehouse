@@ -39,7 +39,7 @@ create or replace table movies_metadata (
   vote_average numeric, 
   vote_count numeric );
   
-  ##Create Warehouse (Small Size in Snowflake)
+  #Create Warehouse (Small Size in Snowflake)
   
   create or replace warehouse movie_table_wh with
   warehouse_size='X-SMALL'

@@ -75,4 +75,16 @@ on_error = 'skip_file';
 +------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------+
 1 Row(s) produced. Time Elapsed: 4.184s
 
+#Ceating new table and uploading another data file in same database(movie_database)
+
+create or replace table ratings (userId NUMERIC, movieId NUMERIC , rating NUMERIC );
+
+put file:///Users/urvashijaitley/Desktop/ratings.csv @movie_database.public.%ratings;
+
+copy into RATINGS 
+from @%ratings
+file_format =(skip_header=1 null_if=('') field_optionally_enclosed_by='"') 
+pattern = '.*ratings.csv.gz'
+on_error = 'skip_file';
+
 

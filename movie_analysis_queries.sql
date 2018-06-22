@@ -54,3 +54,39 @@ where  RELEASE_DATE >= '0017-01-01' AND RELEASE_DATE <= '0018-01-01'
 group by Genre
 order by Profit desc
 limit 10;
+
+#Join movies and ratings table to see relation between ratings and profit/loss
+
+select id , rating, (revenue - budget) as Profit, ORIGINAL_TITLE, 
+from MOVIE_TABLE.PUBLIC.MOVIES_METADATA join MOVIE_TABLE.PUBLIC.ratings
+on MOVIE_TABLE.PUBLIC.MOVIES_METADATA.id = MOVIE_TABLE.PUBLIC.ratings.movieid
+order by Profit desc
+limit 20;
+
+#From the result we see that we 4,58,540 ratings for movie Titanic. Means we need to average the ratings for each movie
+
+select avg(rating) as average_rating, ORIGINAL_TITLE,(revenue - budget) as Profit 
+from MOVIE_TABLE.PUBLIC.MOVIES_METADATA left join MOVIE_TABLE.PUBLIC.ratings
+on MOVIE_TABLE.PUBLIC.MOVIES_METADATA.id = MOVIE_TABLE.PUBLIC.ratings.movieid
+where RELEASE_DATE >= '0017-01-01' AND RELEASE_DATE <= '0018-01-01'
+group by ORIGINAL_TITLE, Profit
+order by Profit desc
+limit 20;
+
+#From the result we see that there are many null values for ratings columns for the year 2017.So to get the relation between ratings and profit we will
+do inner join instead of left join and remove the year clause.
+
+select avg(rating) as average_rating, ORIGINAL_TITLE,(revenue - budget) as Profit 
+from MOVIE_TABLE.PUBLIC.MOVIES_METADATA join MOVIE_TABLE.PUBLIC.ratings
+on MOVIE_TABLE.PUBLIC.MOVIES_METADATA.id = MOVIE_TABLE.PUBLIC.ratings.movieid
+group by ORIGINAL_TITLE, Profit
+order by Profit desc
+limit 50;
+
+#Relation between Loss and average rating
+select avg(rating) as average_rating, ORIGINAL_TITLE,(budget - revenue) as Loss 
+from MOVIE_TABLE.PUBLIC.MOVIES_METADATA join MOVIE_TABLE.PUBLIC.ratings
+on MOVIE_TABLE.PUBLIC.MOVIES_METADATA.id = MOVIE_TABLE.PUBLIC.ratings.movieid
+group by ORIGINAL_TITLE, Loss
+order by Loss desc
+limit 50;

@@ -51,11 +51,28 @@ create or replace table movies_metadata (
 
 put file:///Users/urvashijaitley/Desktop/movies_metadata.csv @movie_database.public.% movies_metadata;
 
-#Copy the file into snowflake table, with header as True
+#If datatype mismatch is there, then datafile will not be copied in snowflake table. Below error will be displayed.
++------------------------+-------------+-------------+-------------+-------------+-------------+-------------------------------------------+------------------+-----------------------+---------------------------+
+| file                   | status      | rows_parsed | rows_loaded | error_limit | errors_seen | first_error                               | first_error_line | first_error_character | first_error_column_name   |
+|------------------------+-------------+-------------+-------------+-------------+-------------+-------------------------------------------+------------------+-----------------------+---------------------------|
+| movies_metadata.csv.gz | LOAD_FAILED |       21117 |           0 |           1 |           2 | Numeric value '8/20/97' is not recognized |            19764 |                   372 | "MOVIES_METADATA"["ID":6] |
++------------------------+-------------+-------------+-------------+-------------+-------------+-------------------------------------------+-
 
+#Make sure all datatypes are correct. I cleaned my data using Python(Pandas). And then uploaded the data file successflly.
+
+#Copy the file into snowflake table, with header as True. 
 copy into movies_metadata
 from @%movies_metadata
 file_format =(skip_header=1 null_if=('') field_optionally_enclosed_by='"') 
 pattern = '.*movies_metadata.csv.gz'
 on_error = 'skip_file';
+
+#message on terminal :
++------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------+
+| file                   | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name |
+|------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------|
+| movies_metadata.csv.gz | LOADED |       45463 |       45463 |           1 |           0 | NULL        |             NULL |                  NULL | NULL                    |
++------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------+
+1 Row(s) produced. Time Elapsed: 4.184s
+
 

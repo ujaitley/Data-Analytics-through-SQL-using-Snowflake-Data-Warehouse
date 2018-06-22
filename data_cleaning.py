@@ -16,7 +16,7 @@ id                       45466 non-null object
 '''
 
 
-'''From the results we observed that there were many columns like budget whose datatype should be int/float, but there datatype is listed as object
+'''From the results we observe that there are many columns like budget whose datatype should be int/float, but its datatype is object,
 which needs to be change. One reason of mismatch datatype could be that there can be few non numeric values (string)
 present in numeric columns, due to which there datatype is listed as object. So, we need to check for non-numeric values 
 in numeric columns.'''
@@ -73,11 +73,11 @@ df = df[pd.to_numeric(df['budget'], errors='coerce').notnull()]
 #Output : new number of entries will be 45463 
 
 #If we don't want to drop whole row, beacuse it might have useful info in other columns then we can just drop values from that
-particular cell (like in this case 3 values only from budget column will be drop instead of complete rows) while converting the column to numeric datatype
+particular cell (like in this case 3 values only from budget column will be dropped instead of complete rows) while converting the column to numeric datatype
 
 df.budget = pd.to_numeric(df.budget, errors='coerce')
 
-#Output : number of entries will be 45466, but in budget column it will be 45463
+#Output : In total,number of entries will be 45466, but in budget column it will be 45463
 
 #To check total number of null values in all columns
 
@@ -105,13 +105,13 @@ spoken_languages             3
 status                      84
 tagline                  25051'''
 
-'''From output we can see that some columns have too many null values like: belongs_to_collection column(null values = 40972), 
-it have only 10% values. Hence we can do dimension reduction and can drop columns with higher % of null values from our dataframe.'''
+'''From output we can see that some columns have too many null values. Like: belongs_to_collection column(null values = 40972), 
+it have only 10% non-null values. Hence we can do dimension reduction and can drop columns with higher % of null values from our dataframe.'''
 
-#Drop multiple columns- First method
+#Drop multiple columns-> First method
 df = df.drop(labels= ['belongs_to_collection','homepage','tagline'], axis = 1)
 
-#Drop multiple columns- Second method
+#Drop multiple columns-> Second method
 columns = ['belongs_to_collection','homepage','tagline']
 df.drop(columns, inplace=True, axis=1)
 

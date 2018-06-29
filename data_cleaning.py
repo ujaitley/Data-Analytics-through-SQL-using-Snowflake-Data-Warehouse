@@ -58,26 +58,11 @@ df.budget = pd.to_numeric(df.budget, errors='coerce')
 #To check total number of null values in all columns
 df.isnull().sum() 
 
-'''Output Sample
-adult                        0
+'''Output Sample (Pasted only the columns having high null values)
+
 belongs_to_collection    40972
-budget                       0
-genres                       0
 homepage                 37684
-id                           0
-imdb_id                     17
-original_language           11
-original_title               0
 overview                   954
-popularity                   3
-poster_path                386
-production_companies         3
-production_countries         3
-release_date                87
-revenue                      3
-runtime                    260
-spoken_languages             3
-status                      84
 tagline                  25051'''
 
 '''From output we can see that some columns have too many null values. Like: belongs_to_collection column(null values = 40972), 
